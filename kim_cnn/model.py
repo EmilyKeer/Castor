@@ -27,8 +27,9 @@ class KimCNN(nn.Module):
         self.conv2 = nn.Conv2d(input_channel, output_channel, (4, words_dim), padding=(3,0))
         self.conv3 = nn.Conv2d(input_channel, output_channel, (5, words_dim), padding=(4,0))
 
-        # testing for conv1
-        self.conv1.weight.data = torch.Tensor(get_words_vector()).unsqueeze_(1)
+        self.conv1.weight.data.copy_(torch.Tensor(get_words_vector(3)).unsqueeze_(1))
+        self.conv1.weight.data.copy_(torch.Tensor(get_words_vector(4)).unsqueeze_(1))
+        self.conv1.weight.data.copy_(torch.Tensor(get_words_vector(5)).unsqueeze_(1))
 
         self.dropout = nn.Dropout(config.dropout)
         self.fc1 = nn.Linear(Ks * output_channel, target_class)
