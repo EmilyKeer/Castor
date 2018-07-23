@@ -3,7 +3,7 @@ import torch.nn as nn
 
 import torch.nn.functional as F
 
-from sample import get_words_vector
+from .sample import get_words_vector
 
 class KimCNN(nn.Module):
     def __init__(self, config):
@@ -28,8 +28,8 @@ class KimCNN(nn.Module):
         self.conv3 = nn.Conv2d(input_channel, output_channel, (5, words_dim), padding=(4,0))
 
         self.conv1.weight.data.copy_(torch.Tensor(get_words_vector(3)).unsqueeze_(1))
-        self.conv1.weight.data.copy_(torch.Tensor(get_words_vector(4)).unsqueeze_(1))
-        self.conv1.weight.data.copy_(torch.Tensor(get_words_vector(5)).unsqueeze_(1))
+        self.conv2.weight.data.copy_(torch.Tensor(get_words_vector(4)).unsqueeze_(1))
+        self.conv3.weight.data.copy_(torch.Tensor(get_words_vector(5)).unsqueeze_(1))
 
         self.dropout = nn.Dropout(config.dropout)
         self.fc1 = nn.Linear(Ks * output_channel, target_class)
